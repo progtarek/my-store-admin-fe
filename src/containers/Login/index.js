@@ -5,7 +5,7 @@ import Layout from '../../components/Layout';
 import Input from '../../shared/UI/Input';
 import { loginRequestAction } from '../../store/actions/auth.action';
 
-function Signin({ login }) {
+function Login({ login }) {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,4 +59,4 @@ const mapDispatchToProps = (dispatch) => ({
   login: (credentials) => dispatch(loginRequestAction(credentials)),
 });
 
-export default connect(null, mapDispatchToProps)(Signin);
+export default connect(null, mapDispatchToProps)(Login);

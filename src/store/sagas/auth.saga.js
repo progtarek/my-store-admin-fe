@@ -9,7 +9,7 @@ function* loginAsync(action) {
     const res = yield call(Auth.login, action.payload);
     persistUserData(res);
     yield put({ type: LOGIN_SUCCESS, payload: res });
-    yield put(push('/'));
+    yield put(push('/dashboard'));
   } catch (e) {
     yield put({ type: LOGIN_FAIL, payload: e });
   }
