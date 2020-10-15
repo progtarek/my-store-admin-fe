@@ -34,11 +34,6 @@ export default function Header() {
                 Signin
               </NavLink>
             </li>
-            <li className='nav-item'>
-              <NavLink to='/signup' className='nav-link'>
-                signup
-              </NavLink>
-            </li>
           </Nav>
         </Navbar.Collapse>
       </Container>
