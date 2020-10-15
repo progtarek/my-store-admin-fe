@@ -1,12 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import { Col, Row, Form, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import Layout from '../../components/Layout';
 import Input from '../../shared/UI/Input';
+import { loginRequestAction } from '../../store/actions/auth.action';
 
-function Signin() {
+function Signin({ login }) {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const handleSubmit = (e) => {
     e.preventDefault();
+    login(credentials);
   };
   return (
     <Fragment>
@@ -52,4 +55,8 @@ function Signin() {
   );
 }
 
-export default Signin;
+const mapDispatchToProps = (dispatch) => ({
+  login: (credentials) => dispatch(loginRequestAction(credentials)),
+});
+
+export default connect(null, mapDispatchToProps)(Signin);
