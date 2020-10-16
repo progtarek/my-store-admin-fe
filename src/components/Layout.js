@@ -6,7 +6,7 @@ function Layout({ children }) {
   return (
     <Fragment>
       <Header />
-      <Container>{children}</Container>
+      <Container fluid>{children}</Container>
     </Fragment>
   );
 }

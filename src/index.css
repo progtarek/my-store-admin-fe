@@ -9,3 +9,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.sidebar {
+  padding-top: 1rem;
+  width: 200px;
+  height: calc(100vh - 56px);
+  border-right: 1px solid #e1e1e1;
+}
+
+.sidebar .nav-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a4a4a;
+}
+.sidebar .nav-link.active {
+  background-color: #f4f9ff;
+  position: relative;
+}
+
+.sidebar .nav-link.active::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  background-color: #343a40;
+  left: -10px;
+  top: 0;
+}
+
+.content {
+  padding: 1rem;
+  flex: 1;
+  height: calc(100vh - 56px);
+}

@@ -10,7 +10,6 @@ function App({ isAuthenticated }) {
     <div className='App'>
       <Switch>
         <Route
-          exact
           path='/dashboard'
           render={() =>
             isAuthenticated ? <Dashboard /> : <Redirect to='/login' />

@@ -15,12 +15,13 @@ const catchError = (err) => {
 };
 
 const requests = {
-  post: (url, body) =>
-    instance.post(url, body).then(responseBody).catch(catchError),
+  post: (url, body, params) =>
+    instance.post(url, body, params).then(responseBody).catch(catchError),
   put: (url, body) =>
     instance.put(url, body).then(responseBody).catch(catchError),
   del: (url) => instance.delete(url).then(responseBody).catch(catchError),
-  get: (url) => instance.get(url).then(responseBody).catch(catchError),
+  get: (url, params) =>
+    instance.get(url, { params }).then(responseBody).catch(catchError),
 };
 
 const Auth = {
@@ -28,4 +29,8 @@ const Auth = {
     requests.post('/admins/auth/login', { ...credentials }),
 };
 
-export { Auth };
+const products = {
+  getProducts: (params) => requests.get('/admins/product', params),
+};
+
+export { Auth, products };

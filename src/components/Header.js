@@ -1,11 +1,18 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { NavLink, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link, NavLink, useHistory } from 'react-router-dom';
+import { removeUserData } from '../helpers';
 
-export default function Header() {
+function Header({ isAuthenticated }) {
+  const history = useHistory();
+  const logout = () => {
+    removeUserData();
+    history.push('/');
+  };
   return (
     <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
-      <Container>
+      <Container fluid>
         <Link to='/' className='navbar-brand'>
           MyStore Dashboard
         </Link>
@@ -29,14 +36,26 @@ export default function Header() {
             */}
           </Nav>
           <Nav>
-            <li className='nav-item'>
-              <NavLink to='/login' className='nav-link'>
-                Login
-              </NavLink>
-            </li>
+            {!isAuthenticated ? (
+              <li className='nav-item'>
+                <NavLink to='/login' className='nav-link'>
+                  Login
+                </NavLink>
+              </li>
+            ) : (
+              <li className='nav-item' onClick={logout}>
+                <Nav.Link>Logout</Nav.Link>
+              </li>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
+
+const mapStateToProps = ({ auth }) => ({
+  isAuthenticated: auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(Header);
