@@ -2,8 +2,9 @@ import React from 'react';
 import { Table as BsTable } from 'react-bootstrap';
 import './table.style.scss';
 import PagesIndication from './PagesIndication';
+import TablePagination from './TablePagination';
 
-function Table({ docs, page, limit, total, header }) {
+function Table({ docs, page, limit, total, header, pages, onPageTo }) {
   return (
     <div className='my-store-table'>
       <PagesIndication docs={docs} page={page} limit={limit} total={total} />
@@ -22,9 +23,17 @@ function Table({ docs, page, limit, total, header }) {
             <td>Mark</td>
             <td>Otto</td>
             <td>@mdo</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
           </tr>
         </tbody>
       </BsTable>
+      <TablePagination
+        limit={limit}
+        page={page}
+        pages={pages}
+        onPageTo={onPageTo}
+      />
     </div>
   );
 }

@@ -40,6 +40,7 @@ function ProductsList({ location, history }) {
         pages={dataset.pages}
         limit={dataset.limit}
         total={dataset.total}
+        onPageTo={getProducts}
       />
     </Fragment>
   );
