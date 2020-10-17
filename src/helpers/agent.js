@@ -1,13 +1,24 @@
 import axios from 'axios';
 
 const API_ROOT = process.env.REACT_APP_API_URL;
-const AUTH_TOKEN = localStorage.getItem('token') || null;
-axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
-const instance = axios.create({
+let instance = axios.create({
   baseURL: API_ROOT,
-  headers: { Authorization: `JWT ${AUTH_TOKEN}` },
 });
+
+// Add a request interceptor
+instance.interceptors.request.use(
+  function (config) {
+    const AUTH_TOKEN = localStorage.getItem('token') || null;
+    if (AUTH_TOKEN) {
+      config.headers.Authorization = `JWT ${AUTH_TOKEN}`;
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
 
 const responseBody = (res) => res.data;
 const catchError = (err) => {

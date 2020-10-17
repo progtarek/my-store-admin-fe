@@ -14,6 +14,7 @@ function ProductsList({ location, history }) {
 
   const getProducts = async ({ page, limit }) => {
     const res = await api.getProducts({ page, limit });
+    res.docs = res.docs.map((doc) => ({}));
     updateDataset(res);
     updateURLQueryParams({ page, limit });
   };
