@@ -1,15 +1,10 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Link, NavLink, useHistory } from 'react-router-dom';
-import { removeUserData } from '../helpers';
+import { logoutAction } from '../store/actions/auth.action';
 
-function Header({ isAuthenticated }) {
-  const history = useHistory();
-  const logout = () => {
-    removeUserData();
-    history.push('/');
-  };
+function Header({ isAuthenticated, logout }) {
   return (
     <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Container fluid>
@@ -58,4 +53,8 @@ const mapStateToProps = ({ auth }) => ({
   isAuthenticated: auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(logoutAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

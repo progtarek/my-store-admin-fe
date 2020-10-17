@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS } from '../constants';
+import { LOGIN_SUCCESS, LOGOUT } from '../constants';
 
 const initialState = {
   username: window.localStorage.getItem('username') || null,
@@ -16,6 +16,16 @@ export default (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         ...action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: false,
+        username: null,
+        firstName: null,
+        lastName: null,
+        email: null,
+        token: null,
       };
     default:
       return state;

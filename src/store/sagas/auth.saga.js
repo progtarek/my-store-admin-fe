@@ -1,8 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { LOGIN_REQUEST, LOGIN_FAIL, LOGIN_SUCCESS } from '../constants';
 import { Auth } from '../../helpers/agent';
 import { persistUserData } from '../../helpers';
 import { push } from 'connected-react-router';
+import { removeUserData } from '../../helpers';
+import {
+  LOGOUT,
+  LOGIN_FAIL,
+  LOGOUT_FAIL,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+} from '../constants';
 
 function* loginAsync(action) {
   try {
@@ -15,8 +22,22 @@ function* loginAsync(action) {
   }
 }
 
+function* logoutAsync() {
+  removeUserData();
+  yield put(push('/'));
+
+  try {
+  } catch (e) {
+    yield put({ type: LOGOUT_FAIL, payload: e });
+  }
+}
+
 function* login() {
   yield takeLatest(LOGIN_REQUEST, loginAsync);
 }
 
-export { login };
+function* logout() {
+  yield takeLatest(LOGOUT, logoutAsync);
+}
+
+export { login, logout };
