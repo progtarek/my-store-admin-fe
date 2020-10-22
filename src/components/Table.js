@@ -3,6 +3,7 @@ import { Table as BsTable } from 'react-bootstrap';
 import './table.style.scss';
 import PagesIndication from './PagesIndication';
 import TablePagination from './TablePagination';
+import _ from 'lodash';
 
 function Table({ docs, page, limit, total, header, pages, onPageTo }) {
   return (
@@ -13,19 +14,21 @@ function Table({ docs, page, limit, total, header, pages, onPageTo }) {
           <tr>
             <th>#</th>
             {header.map((item, index) => (
-              <th key={index + 1}>{item}</th>
+              <th key={index + 1}>{item.display}</th>
             ))}
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
+          {docs.map((doc, index) => (
+            <tr key={`my-store-table-row${index + 1}`}>
+              <td>{index + 1}</td>
+              {header.map((item, j) => (
+                <td key={`my-store-table-cell${j + 1}`}>
+                  {_.get(doc, item.key)}
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </BsTable>
       <TablePagination

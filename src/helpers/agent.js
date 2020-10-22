@@ -42,6 +42,12 @@ const Auth = {
 
 const products = {
   getProducts: (params) => requests.get('/admins/product', params),
+  createProduct: (body, params) =>
+    requests.post('/admins/product', body, params),
 };
 
-export { Auth, products };
+const categories = {
+  getCategories: (params) => requests.get('/admins/category', params),
+};
+
+export { Auth, products, categories };

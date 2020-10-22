@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import Table from '../../components/Table';
 import { products as api } from '../../helpers/agent';
 import { updateURLQueryParams } from '../../helpers';
+import { Row, Col, Button } from 'react-bootstrap';
 
 function ProductsList({ location, history }) {
   const [dataset, updateDataset] = useState({
@@ -14,17 +15,31 @@ function ProductsList({ location, history }) {
 
   const getProducts = async ({ page, limit }) => {
     const res = await api.getProducts({ page, limit });
-    res.docs = res.docs.map((doc) => ({}));
     updateDataset(res);
     updateURLQueryParams({ page, limit });
   };
 
   const header = [
-    'product name',
-    'category',
-    'price',
-    'created by',
-    'created at',
+    {
+      display: 'product name',
+      key: 'name.en',
+    },
+    {
+      display: 'category',
+      key: 'category.name.en',
+    },
+    {
+      display: 'price',
+      key: 'price',
+    },
+    {
+      display: 'created by',
+      key: 'createdBy.firstName',
+    },
+    {
+      display: 'created at',
+      key: 'updatedAt',
+    },
   ];
 
   useEffect(() => {
@@ -34,6 +49,16 @@ function ProductsList({ location, history }) {
   }, []);
   return (
     <Fragment>
+      <Row className='mt-2 mb-4'>
+        <Col>
+          <h4>Products list</h4>
+        </Col>
+        <Col className='text-right'>
+          <Button onClick={() => history.push('products/create')}>
+            Create new product
+          </Button>
+        </Col>
+      </Row>
       <Table
         header={header}
         docs={dataset.docs}
