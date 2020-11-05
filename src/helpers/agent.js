@@ -59,4 +59,8 @@ const categories = {
     requests.put(`admins/category/${id}`, payload),
 };
 
-export { Auth, products, categories };
+const media = {
+  upload: (files) => requests.post('media/upload', files),
+};
+
+export { Auth, products, categories, media };

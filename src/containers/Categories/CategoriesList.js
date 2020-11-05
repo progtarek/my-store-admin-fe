@@ -35,7 +35,7 @@ function CategoriesList({ location, history }) {
     },
     {
       display: 'parent category name',
-      key: 'parent.category.name',
+      key: 'parent.name.en',
     },
     {
       display: 'sort',
