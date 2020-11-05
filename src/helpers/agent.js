@@ -51,6 +51,12 @@ const products = {
 
 const categories = {
   getCategories: (params) => requests.get('/admins/category', params),
+  getCategory: (id) => requests.get(`admins/category/${id}`, null),
+  createCategory: (body, params) =>
+    requests.post('/admins/category', body, params),
+  deleteCategory: (id) => requests.del(`admins/category/${id}`),
+  updateCategory: (id, payload) =>
+    requests.put(`admins/category/${id}`, payload),
 };
 
 export { Auth, products, categories };
