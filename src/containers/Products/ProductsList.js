@@ -19,6 +19,15 @@ function ProductsList({ location, history }) {
     updateURLQueryParams({ page, limit });
   };
 
+  const onEdit = (row) => {
+    history.push(`products/edit/${row._id}`);
+  };
+
+  const onDelete = async (row) => {
+    await api.deleteProduct(row._id);
+    getProducts({ page: dataset.page, limit: dataset.limit });
+  };
+
   const header = [
     {
       display: 'product name',
@@ -67,6 +76,8 @@ function ProductsList({ location, history }) {
         limit={dataset.limit}
         total={dataset.total}
         onPageTo={getProducts}
+        onEdit={onEdit}
+        onDelete={onDelete}
       />
     </Fragment>
   );

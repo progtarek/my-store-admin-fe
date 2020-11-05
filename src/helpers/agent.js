@@ -29,7 +29,7 @@ const requests = {
   post: (url, body, params) =>
     instance.post(url, body, params).then(responseBody).catch(catchError),
   put: (url, body) =>
-    instance.put(url, body).then(responseBody).catch(catchError),
+    instance.patch(url, body).then(responseBody).catch(catchError),
   del: (url) => instance.delete(url).then(responseBody).catch(catchError),
   get: (url, params) =>
     instance.get(url, { params }).then(responseBody).catch(catchError),
@@ -42,8 +42,11 @@ const Auth = {
 
 const products = {
   getProducts: (params) => requests.get('/admins/product', params),
+  getProduct: (id) => requests.get(`admins/product/${id}`, null),
   createProduct: (body, params) =>
     requests.post('/admins/product', body, params),
+  deleteProduct: (id) => requests.del(`admins/product/${id}`),
+  updateProduct: (id, payload) => requests.put(`admins/product/${id}`, payload),
 };
 
 const categories = {

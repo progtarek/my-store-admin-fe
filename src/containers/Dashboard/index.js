@@ -9,7 +9,7 @@ import {
 import Layout from '../../components/Layout';
 import Sidebar from '../../components/Sidebar';
 const CategoriesList = lazy(() => import('../Categories/CategoriesList'));
-const ProductCreate = lazy(() => import('../Products/ProductCreate'));
+const ProductManage = lazy(() => import('../Products/ProductManage'));
 const ProductsList = lazy(() => import('../Products/ProductsList'));
 
 function Dashboard() {
@@ -30,7 +30,12 @@ function Dashboard() {
               <Route
                 exact
                 path={`${path}/products/create`}
-                component={withRouter(ProductCreate)}
+                component={withRouter(ProductManage)}
+              ></Route>
+              <Route
+                exact
+                path={`${path}/products/edit/:productId`}
+                component={withRouter(ProductManage)}
               ></Route>
               <Route
                 exact

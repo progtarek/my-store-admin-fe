@@ -1,11 +1,23 @@
-import React from 'react';
 import { Table as BsTable } from 'react-bootstrap';
-import './table.style.scss';
+import EditIcon from '../assets/images/edit.svg';
+import DeleteIcon from '../assets/images/delete.svg';
 import PagesIndication from './PagesIndication';
 import TablePagination from './TablePagination';
+import './table.style.scss';
+import React from 'react';
 import _ from 'lodash';
 
-function Table({ docs, page, limit, total, header, pages, onPageTo }) {
+function Table({
+  docs,
+  page,
+  limit,
+  total,
+  header,
+  pages,
+  onPageTo,
+  onEdit,
+  onDelete,
+}) {
   return (
     <div className='my-store-table'>
       <PagesIndication docs={docs} page={page} limit={limit} total={total} />
@@ -16,6 +28,7 @@ function Table({ docs, page, limit, total, header, pages, onPageTo }) {
             {header.map((item, index) => (
               <th key={index + 1}>{item.display}</th>
             ))}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +40,20 @@ function Table({ docs, page, limit, total, header, pages, onPageTo }) {
                   {_.get(doc, item.key)}
                 </td>
               ))}
+              <td>
+                <img
+                  className='cursor-pointer'
+                  src={EditIcon}
+                  onClick={() => onEdit(doc)}
+                  alt='Edit Item'
+                />
+                <img
+                  className='cursor-pointer'
+                  src={DeleteIcon}
+                  onClick={() => onDelete(doc)}
+                  alt='Delete Item'
+                />
+              </td>
             </tr>
           ))}
         </tbody>

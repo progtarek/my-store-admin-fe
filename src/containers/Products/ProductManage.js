@@ -4,7 +4,7 @@ import * as api from '../../helpers/agent';
 import Textarea from '../../shared/UI/Textarea';
 import Input from '../../shared/UI/Input';
 
-function ProductCreate({ history }) {
+function ProductManage({ history, match: { params } }) {
   const [categories, setCategories] = useState([]);
   const [productForm, setProductForm] = useState({
     name: {
@@ -24,11 +24,25 @@ function ProductCreate({ history }) {
     setCategories(res.docs);
   };
 
+  const getProduct = async (id) => {
+    const res = await api.products.getProduct(id);
+    setProductForm({
+      name: res.name,
+      description: res.description,
+      category: res.category,
+      price: res.price,
+    });
+  };
+
   const onSubmit = async (e) => {
     try {
       e.preventDefault();
-      const result = await api.products.createProduct(productForm);
-      console.log(result);
+      if (params.productId) {
+        await api.products.updateProduct(params.productId, productForm);
+      } else {
+        await api.products.createProduct(productForm);
+      }
+
       history.push('/dashboard/products');
     } catch (error) {
       console.log(error);
@@ -37,7 +51,10 @@ function ProductCreate({ history }) {
 
   useEffect(() => {
     getCategories({});
-  }, []);
+    if (params.productId) {
+      getProduct(params.productId);
+    }
+  }, [params.productId]);
   return (
     <Fragment>
       <Row className='justify-content-md-center'>
@@ -73,6 +90,7 @@ function ProductCreate({ history }) {
                   placeholder='product name'
                   required={true}
                   minLength={3}
+                  value={productForm.name.ar}
                   onChange={(e) =>
                     setProductForm({
                       ...productForm,
@@ -96,6 +114,7 @@ function ProductCreate({ history }) {
                   placeholder='product description'
                   minLength={3}
                   rows={3}
+                  value={productForm.description.en}
                   onChange={(e) =>
                     setProductForm({
                       ...productForm,
@@ -115,6 +134,7 @@ function ProductCreate({ history }) {
                   placeholder='product description'
                   minLength={3}
                   rows={3}
+                  value={productForm.description.ar}
                   onChange={(e) =>
                     setProductForm({
                       ...productForm,
@@ -134,6 +154,8 @@ function ProductCreate({ history }) {
                   <Form.Control
                     as='select'
                     custom
+                    placeholder='choose category'
+                    value={productForm.category}
                     onChange={(e) =>
                       setProductForm({
                         ...productForm,
@@ -157,6 +179,13 @@ function ProductCreate({ history }) {
                   type='number'
                   label='Price: *'
                   placeholder='product price'
+                  value={productForm.price}
+                  onChange={(e) =>
+                    setProductForm({
+                      ...productForm,
+                      price: e.target.value,
+                    })
+                  }
                   required={true}
                   min={1}
                 />
@@ -164,7 +193,7 @@ function ProductCreate({ history }) {
             </Row>
 
             <Button variant='primary' type='submit'>
-              Create product
+              {params.productId ? 'Update product' : 'Create product'}
             </Button>
           </Form>
         </Col>
@@ -173,4 +202,4 @@ function ProductCreate({ history }) {
   );
 }
 
-export default ProductCreate;
+export default ProductManage;
